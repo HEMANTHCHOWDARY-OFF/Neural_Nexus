@@ -2,199 +2,278 @@
 
 import { LandingNavbar } from "@/components/layout/LandingNavbar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import {
   CheckCircle,
   TreePine,
   Folder,
+  Users,
   FileText,
   Trophy,
-  ArrowRight
+  ArrowRight,
+  X,
+  Calendar,
+  Flame,
+  Code,
+  Target
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import dynamic from "next/dynamic";
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+const ThreeBackground = dynamic(() => import("@/components/ThreeBackground").then(mod => ({ default: mod.ThreeBackground })), {
+  ssr: false,
+  loading: () => null
+});
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+const NetworkVisualization = dynamic(() => import("@/components/NetworkVisualization").then(mod => ({ default: mod.NetworkVisualization })), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-white/5 rounded-2xl animate-pulse" />
+});
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
       <LandingNavbar />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Abstract Background Elements */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-[120px] rounded-full z-0 pointer-events-none" />
+      {/* Three.js Animated Background */}
+      <ThreeBackground />
 
-        <div className="container px-4 mx-auto relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-6">
-              Plan. <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Grow.</span> Get Hired.
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              The ultimate platform to track your daily progress, build impactful projects, and land your dream job.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/signup">
-                <Button size="lg" className="h-12 px-8 text-lg shadow-lg shadow-primary/20">
-                  Get Started <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="#how-it-works">
-                <Button size="lg" variant="outline" className="h-12 px-8 text-lg">
-                  Learn More
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Grid */}
-      <section id="features" className="py-20 bg-muted/30">
+      {/* Hero Section - Above the Fold */}
+      <section className="relative pt-32 pb-20 z-10">
         <div className="container px-4 mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Everything you need to succeed</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              A complete toolkit designed for students and professionals to accelerate their career growth.
-            </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Copy */}
+            <div>
+              <motion.h1
+                className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <span className="text-white">Build Skills.</span><br />
+                <span className="text-white">Collaborate.</span><br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Get Hired.</span>
+              </motion.h1>
+
+              <motion.p
+                className="text-xl text-gray-300 mb-8 max-w-xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                Daily tracker, project portfolio, live coding rooms, and AI resume tools — all in one workspace.
+              </motion.p>
+
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <Link href="/signup">
+                  <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500">
+                    Try Live Demo
+                  </Button>
+                </Link>
+                <Link href="/login">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 text-lg border-white/20 hover:bg-white/5">
+                    Login
+                  </Button>
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Right - 3D Network Visual */}
+            <motion.div
+              className="relative h-[500px]"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className="relative h-full rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden">
+                <NetworkVisualization />
+
+                {/* Overlay label */}
+                <div className="absolute bottom-6 left-6 right-6 bg-black/60 backdrop-blur-md rounded-xl p-4 border border-white/10">
+                  <h3 className="text-lg font-semibold text-white mb-1">Connected Network</h3>
+                  <p className="text-sm text-gray-400">Build skills together, grow as a community</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
-
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            <motion.div variants={item}>
-              <Card className="h-full hover:shadow-lg transition-shadow border-primary/10">
-                <CardHeader>
-                  <CheckCircle className="h-10 w-10 text-green-500 mb-2" />
-                  <CardTitle>Daily Tracker</CardTitle>
-                  <CardDescription>Track your daily tasks and habits effectively.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  Build consistency with our intuitive daily task management system.
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={item}>
-              <Card className="h-full hover:shadow-lg transition-shadow border-primary/10">
-                <CardHeader>
-                  <TreePine className="h-10 w-10 text-emerald-600 mb-2" />
-                  <CardTitle>Tree Growth</CardTitle>
-                  <CardDescription>Visualize your progress as a growing tree.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  Watch your virtual tree grow as you complete tasks and maintain streaks.
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={item}>
-              <Card className="h-full hover:shadow-lg transition-shadow border-primary/10">
-                <CardHeader>
-                  <Folder className="h-10 w-10 text-blue-500 mb-2" />
-                  <CardTitle>Projects</CardTitle>
-                  <CardDescription>Showcase your work and build a portfolio.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  Organize and display your projects to impress potential recruiters.
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={item}>
-              <Card className="h-full hover:shadow-lg transition-shadow border-primary/10">
-                <CardHeader>
-                  <FileText className="h-10 w-10 text-pink-500 mb-2" />
-                  <CardTitle>Resume AI</CardTitle>
-                  <CardDescription>Get AI-powered feedback on your resume.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  Optimize your resume with intelligent suggestions and formatting tools.
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={item}>
-              <Card className="h-full hover:shadow-lg transition-shadow border-primary/10">
-                <CardHeader>
-                  <Trophy className="h-10 w-10 text-yellow-500 mb-2" />
-                  <CardTitle>Competitive Stats</CardTitle>
-                  <CardDescription>Track your coding contest ratings.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  Integrate with LeetCode/CodeForces to show off your competitive programming skills.
-                </CardContent>
-              </Card>
-            </motion.div>
-          </motion.div>
         </div>
       </section>
 
-      {/* How it Works */}
-      <section id="how-it-works" className="py-20">
+      {/* Problem → Solution */}
+      <section className="py-20 relative z-10 border-t border-white/10">
         <div className="container px-4 mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">How it works</h2>
-            <p className="text-muted-foreground">Simple steps to accelerate your career.</p>
-          </div>
+          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            {/* Problem */}
+            <div>
+              <h3 className="text-2xl font-bold text-red-400 mb-6 flex items-center gap-2">
+                <X className="w-6 h-6" /> The Problem
+              </h3>
+              <ul className="space-y-4">
+                {[
+                  "Learning scattered across platforms",
+                  "No consistency in daily practice",
+                  "Hard to find teammates for projects",
+                  "Weak resumes with no proof of work"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-gray-300">
+                    <X className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-center">
-            <div className="space-y-4">
-              <div className="mx-auto w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-xl font-bold text-blue-600">1</div>
-              <h3 className="text-xl font-semibold">Plan</h3>
-              <p className="text-muted-foreground">Set your daily goals and long-term objectives.</p>
-            </div>
-            <div className="space-y-4">
-              <div className="mx-auto w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-xl font-bold text-purple-600">2</div>
-              <h3 className="text-xl font-semibold">Grow</h3>
-              <p className="text-muted-foreground">Complete tasks, build projects, and visualize your growth.</p>
-            </div>
-            <div className="space-y-4">
-              <div className="mx-auto w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-xl font-bold text-green-600">3</div>
-              <h3 className="text-xl font-semibold">Get Hired</h3>
-              <p className="text-muted-foreground"> Showcase your profile and portfolio to recruiters.</p>
+            {/* Solution */}
+            <div>
+              <h3 className="text-2xl font-bold text-green-400 mb-6 flex items-center gap-2">
+                <CheckCircle className="w-6 h-6" /> The Solution
+              </h3>
+              <ul className="space-y-4">
+                {[
+                  "Plan daily with smart tracker",
+                  "Track growth with visual tree",
+                  "Collaborate on real projects",
+                  "Share recruiter-ready profile"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-primary/5">
+      {/* Everything You Need */}
+      <section className="py-20 relative z-10">
+        <div className="container px-4 mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
+            Everything you need in one hub
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Execute Daily */}
+            <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+              <Calendar className="w-12 h-12 text-blue-400 mb-4" />
+              <h3 className="text-2xl font-bold mb-4 text-white">Execute Daily</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>• Daily planner</li>
+                <li>• Streak system</li>
+                <li>• Tree growth 🌱</li>
+              </ul>
+            </div>
+
+            {/* Build Together */}
+            <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+              <Users className="w-12 h-12 text-purple-400 mb-4" />
+              <h3 className="text-2xl font-bold mb-4 text-white">Build Together</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>• Project teams</li>
+                <li>• Kanban board</li>
+                <li>• Live code rooms</li>
+              </ul>
+            </div>
+
+            {/* Get Hired */}
+            <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+              <Target className="w-12 h-12 text-green-400 mb-4" />
+              <h3 className="text-2xl font-bold mb-4 text-white">Get Hired</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>• Resume builder</li>
+                <li>• ATS score</li>
+                <li>• AI Interview prep</li>
+                <li>• Competitive stats</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 relative z-10 border-t border-white/10">
+        <div className="container px-4 mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
+            How NexusHub Works
+          </h2>
+
+          <div className="max-w-4xl mx-auto space-y-6">
+            {[
+              { num: "1", text: "Plan today's goals", icon: Calendar },
+              { num: "2", text: "Track progress → tree grows", icon: TreePine },
+              { num: "3", text: "Build projects with team", icon: Users },
+              { num: "4", text: "Generate resume", icon: FileText },
+              { num: "5", text: "Share profile link", icon: Target }
+            ].map((step, i) => (
+              <motion.div
+                key={i}
+                className="flex items-center gap-6 p-6 rounded-xl bg-white/5 border border-white/10"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-xl font-bold text-white flex-shrink-0">
+                  {step.num}
+                </div>
+                <step.icon className="w-8 h-8 text-gray-400 flex-shrink-0" />
+                <p className="text-xl text-gray-200">{step.text}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Proof */}
+      <section className="py-20 relative z-10">
         <div className="container px-4 mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to start your journey?</h2>
-          <Link href="/signup">
-            <Button size="lg" className="h-12 px-8 text-lg">
-              Join NexusHub Now
-            </Button>
-          </Link>
+          <div className="max-w-3xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                "AI-Powered Tools",
+                "Team Collaboration",
+                "Portfolio Builder",
+                "Career Tracking"
+              ].map((item, i) => (
+                <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <CheckCircle className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                  <p className="text-sm text-gray-300">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      <footer className="py-8 text-center text-muted-foreground text-sm border-t">
-        <p>© 2024 NexusHub. All rights reserved.</p>
+      {/* Final CTA */}
+      <section className="py-20 relative z-10 border-t border-white/10">
+        <div className="container px-4 mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            Ready to level up your skills?
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/signup">
+              <Button size="lg" className="h-16 px-12 text-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500">
+                Try Live Demo
+              </Button>
+            </Link>
+            <Link href="https://github.com" target="_blank">
+              <Button size="lg" variant="outline" className="h-16 px-12 text-xl border-white/20 hover:bg-white/5">
+                View GitHub
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <footer className="py-8 text-center text-gray-500 text-sm border-t border-white/10 relative z-10">
+        <p>© 2024 NexusHub • Your all-in-one career growth platform</p>
       </footer>
     </div>
   );

@@ -9,9 +9,9 @@ export function Header() {
     const { user } = useAuth();
 
     return (
-        <header className="h-16 border-b flex items-center justify-between px-6 bg-background">
+        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-background/30 backdrop-blur-md sticky top-0 z-20">
             <div>
-                <h1 className="text-xl font-semibold">Welcome back, {user?.displayName || "User"}</h1>
+                <h1 className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Welcome back, {user?.displayName || "User"}</h1>
             </div>
             <div className="flex items-center gap-4">
                 <Button variant="ghost" size="icon">

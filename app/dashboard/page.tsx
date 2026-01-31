@@ -5,114 +5,78 @@ import { cn } from "@/lib/utils";
 
 // Placeholder Components (Slots)
 const TreeWidgetSlot = () => (
-    <div className="h-64 border-2 border-dashed border-emerald-500/20 rounded-lg flex items-center justify-center bg-emerald-500/5">
-        <span className="text-emerald-500 font-medium">Tree Component Slot</span>
+    <div className="h-64 border border-emerald-500/30 rounded-xl flex items-center justify-center bg-emerald-500/5 backdrop-blur-sm hover:border-emerald-500/50 transition-colors cursor-pointer group relative overflow-hidden">
+        <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+        <span className="text-emerald-400 font-medium z-10">Tree Component Slot</span>
     </div>
 );
 
-const TrackerSlot = () => (
-    <Card>
+const WidgetSlot = ({ title, label, color = "gray", height = "h-40" }: { title: string, label: string, color?: string, height?: string }) => (
+    <Card className="border-white/10 bg-white/5 backdrop-blur-sm hover:border-white/20 transition-all duration-300">
         <CardHeader>
-            <CardTitle>Today's Tasks</CardTitle>
+            <CardTitle className="text-lg">{title}</CardTitle>
         </CardHeader>
         <CardContent>
-            <div className="h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
-                <span className="text-gray-400">Tracker List Slot</span>
-            </div>
-        </CardContent>
-    </Card>
-);
-
-const ProjectsSlot = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle>Projects Summary</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <div className="h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
-                <span className="text-gray-400">Projects Widget Slot</span>
-            </div>
-        </CardContent>
-    </Card>
-);
-
-const AnalyticsSlot = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle>Weekly Analytics</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <div className="h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
-                <span className="text-gray-400">Analytics Chart Slot</span>
-            </div>
-        </CardContent>
-    </Card>
-);
-
-const CareerSlot = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle>Career Tools</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <div className="h-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
-                <span className="text-gray-400">Resume/Jobs Slot</span>
+            <div className={`${height} border border-dashed border-white/10 rounded-lg flex items-center justify-center bg-black/20`}>
+                <span className="text-muted-foreground">{label}</span>
             </div>
         </CardContent>
     </Card>
 );
 
 const CompetitiveSlot = () => (
-    <div className="h-32 border-2 border-dashed border-yellow-500/20 rounded-lg flex items-center justify-center bg-yellow-500/5 mt-4">
+    <div className="h-32 border border-yellow-500/30 rounded-xl flex items-center justify-center bg-yellow-500/5 mt-4 backdrop-blur-sm hover:bg-yellow-500/10 transition-colors">
         <span className="text-yellow-500 font-medium">Competitive Stats Slot</span>
     </div>
 );
 
 const StreakSlot = () => (
-    <div className="h-24 border-2 border-dashed border-blue-500/20 rounded-lg flex items-center justify-center bg-blue-500/5 mt-4">
-        <span className="text-blue-500 font-medium">Streak Widget Slot</span>
+    <div className="h-24 border border-blue-500/30 rounded-xl flex items-center justify-center bg-blue-500/5 mt-4 backdrop-blur-sm">
+        <span className="text-blue-400 font-medium">Streak Widget Slot</span>
     </div>
 );
 
 export default function DashboardPage() {
     return (
         <div className="flex flex-col lg:flex-row h-full">
-            {/* LEFT: Light Theme - Main Workspace */}
-            <div className="flex-1 p-8 bg-slate-50 overflow-auto">
-                <div className="max-w-4xl mx-auto space-y-6">
+            {/* LEFT: Main Workspace (Royal Dark) */}
+            <div className="flex-1 p-8 overflow-auto">
+                <div className="max-w-5xl mx-auto space-y-8">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-3xl font-bold text-slate-800">Dashboard</h2>
-                        <p className="text-slate-500">Overview of your progress</p>
+                        <div>
+                            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Dashboard</h2>
+                            <p className="text-muted-foreground mt-1">Overview of your progress</p>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <TrackerSlot />
-                        <AnalyticsSlot />
+                        <WidgetSlot title="Today's Tasks" label="Tracker List Slot" />
+                        <WidgetSlot title="Weekly Analytics" label="Analytics Chart Slot" />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <ProjectsSlot />
-                        <CareerSlot />
+                        <WidgetSlot title="Projects Summary" label="Projects Widget Slot" />
+                        <WidgetSlot title="Career Tools" label="Resume/Jobs Slot" />
                     </div>
                 </div>
             </div>
 
-            {/* RIGHT: Dark Theme - Focus Panel */}
-            <div className="w-full lg:w-[400px] bg-slate-900 text-slate-100 p-8 overflow-auto border-l border-slate-800">
+            {/* RIGHT: Focus Panel (Deep Obsidian) */}
+            <div className="w-full lg:w-[400px] border-l border-white/10 bg-black/20 p-8 overflow-auto backdrop-blur-xl">
                 <div className="space-y-6">
-                    <h3 className="text-xl font-semibold mb-4 text-slate-200">Focus Zone</h3>
+                    <h3 className="text-xl font-semibold mb-4 text-white/90">Focus Zone</h3>
 
                     <div className="space-y-6">
                         <TreeWidgetSlot />
                         <StreakSlot />
                         <CompetitiveSlot />
 
-                        <div className="p-4 bg-slate-800 rounded-lg mt-8">
-                            <h4 className="text-sm font-medium text-slate-400 mb-2">XP Progress</h4>
-                            <div className="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
-                                <div className="h-full bg-purple-500 w-[65%]" />
+                        <div className="p-4 border border-white/5 bg-white/5 rounded-xl mt-8">
+                            <h4 className="text-sm font-medium text-gray-400 mb-2">XP Progress</h4>
+                            <div className="h-2 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 w-[65%]" />
                             </div>
-                            <div className="flex justify-between text-xs text-slate-500 mt-1">
+                            <div className="flex justify-between text-xs text-gray-500 mt-2">
                                 <span>Level 5</span>
                                 <span>1250 / 2000 XP</span>
                             </div>

@@ -38,7 +38,7 @@ export function Sidebar({ className }: { className?: string }) {
     };
 
     return (
-        <div className={cn("flex flex-col h-full border-r bg-card text-card-foreground", className)}>
+        <div className={cn("flex flex-col h-full border-r border-white/10 bg-background/30 backdrop-blur-xl text-card-foreground", className)}>
             <div className="p-6">
                 <div className="flex items-center gap-2 mb-8">
                     <div className="relative w-8 h-8">
@@ -49,7 +49,7 @@ export function Sidebar({ className }: { className?: string }) {
                             className="object-contain"
                         />
                     </div>
-                    <span className="text-xl font-bold">NexusHub</span>
+                    <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">NexusHub</span>
                 </div>
 
                 <nav className="space-y-2">
@@ -58,10 +58,12 @@ export function Sidebar({ className }: { className?: string }) {
                         return (
                             <Link key={item.href} href={item.href}>
                                 <Button
-                                    variant={isActive ? "secondary" : "ghost"}
+                                    variant="ghost"
                                     className={cn(
-                                        "w-full justify-start gap-3",
-                                        isActive && "bg-secondary"
+                                        "w-full justify-start gap-3 transition-all duration-300",
+                                        isActive
+                                            ? "bg-primary/20 text-primary border-l-2 border-primary"
+                                            : "hover:bg-white/5 hover:text-white"
                                     )}
                                 >
                                     <item.icon className="h-5 w-5" />
@@ -73,8 +75,8 @@ export function Sidebar({ className }: { className?: string }) {
                 </nav>
             </div>
 
-            <div className="mt-auto p-6 border-t">
-                <Button variant="ghost" className="w-full justify-start gap-3" onClick={handleLogout}>
+            <div className="mt-auto p-6 border-t border-white/10">
+                <Button variant="ghost" className="w-full justify-start gap-3 hover:bg-red-500/10 hover:text-red-400" onClick={handleLogout}>
                     <LogOut className="h-5 w-5" />
                     Logout
                 </Button>
