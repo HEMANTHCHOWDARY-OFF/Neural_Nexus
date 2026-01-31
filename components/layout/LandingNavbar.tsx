@@ -20,6 +20,7 @@ export function LandingNavbar() {
                                 src="/nexushub-logo-v2.png"
                                 alt="NexusHub Logo"
                                 fill
+                                sizes="40px"
                                 className="object-contain"
                             />
                         </div>

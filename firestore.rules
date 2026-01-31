@@ -1,0 +1,96 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Projects Collection
+    match /projects/{projectId} {
+      // Anyone authenticated can read projects (for collaboration)
+      allow read: if request.auth != null;
+      
+      // Only authenticated users can create projects
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.owner_id;
+      
+      // Only project owner can update/delete
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.owner_id;
+    }
+    
+    // Project Files Collection
+    match /project_files/{fileId} {
+      // Anyone authenticated can read files
+      allow read: if request.auth != null;
+      
+      // Anyone authenticated can create/update files (for collaboration)
+      allow create, update: if request.auth != null;
+      
+      // Only allow delete if user is authenticated
+      allow delete: if request.auth != null;
+    }
+    
+    // Project Members Collection
+    match /project_members/{memberId} {
+      // Anyone authenticated can read members
+      allow read: if request.auth != null;
+      
+      // Anyone authenticated can create/update/delete members
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // Project Whiteboard Collection
+    match /project_whiteboard/{whiteboardId} {
+      // Anyone authenticated can read whiteboards
+      allow read: if request.auth != null;
+      
+      // Anyone authenticated can create/update/delete whiteboards
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // Resume Screenings Collection
+    match /resume_screenings/{document} {
+      // Allow users to read their own resume screenings
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      
+      // Allow users to create their own resume screenings
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      
+      // Allow users to update/delete their own resume screenings
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // AI Interview Simulations Collection
+    match /ai_interviews/{document} {
+      // Allow users to read their own interview simulations
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      
+      // Allow users to create their own interview simulations
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      
+      // Allow users to update/delete their own interview simulations
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // Interview Simulations Collection (alternative name)
+    match /interview_simulations/{document} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // User Profiles Collection (if needed)
+    match /users/{userId} {
+      // Users can read their own profile
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Users can create/update their own profile
+      allow create, update: if request.auth != null && request.auth.uid == userId;
+      
+      // No one can delete profiles
+      allow delete: if false;
+    }
+    
+    // Default deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

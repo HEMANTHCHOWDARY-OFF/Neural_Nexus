@@ -104,7 +104,7 @@ function ParticleField({ mouse }: { mouse: { x: number; y: number } }) {
                 size={0.02}
                 sizeAttenuation={true}
                 depthWrite={false}
-                opacity={0.6}
+                opacity={0.9}
                 blending={THREE.AdditiveBlending}
             />
         </Points>
@@ -158,7 +158,7 @@ function ConnectedParticles() {
             <lineBasicMaterial
                 color="#6366f1"
                 transparent
-                opacity={0.15}
+                opacity={0.3}
                 blending={THREE.AdditiveBlending}
             />
         </lineSegments>

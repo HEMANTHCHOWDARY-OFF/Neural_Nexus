@@ -1,11 +1,11 @@
 "use client";
 
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import { DashboardNavbar } from "@/components/dashboard/DashboardNavbar";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export default function DashboardLayout({
     children,
@@ -14,6 +14,7 @@ export default function DashboardLayout({
 }) {
     const { user, loading } = useAuth();
     const router = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
         if (!loading && !user) {
@@ -30,23 +31,20 @@ export default function DashboardLayout({
     }
 
     if (!user) {
-        return null; // Will redirect
+        return null;
     }
 
     return (
-        <div className="flex h-screen overflow-hidden bg-background">
-            {/* Sidebar - Hidden on mobile, usually handled by a Sheet but using simple hidden for now as per minimal reqs, but Sidebar component has responsive logic */}
-            <div className="hidden md:block w-64 h-full">
-                <Sidebar className="h-full" />
-            </div>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <div className="flex h-screen overflow-hidden bg-background flex-col">
+                {/* Top Navigation Bar */}
+                <DashboardNavbar />
 
-            {/* Main Content Area */}
-            <div className="flex-1 flex flex-col h-full overflow-hidden">
-                <Header />
-                <main className="flex-1 overflow-auto">
+                {/* Main Content Area */}
+                <div className="flex-1 overflow-auto bg-gradient-to-br from-background via-background to-muted/20 p-6">
                     {children}
-                </main>
+                </div>
             </div>
-        </div>
+        </ThemeProvider>
     );
 }

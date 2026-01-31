@@ -1,0 +1,193 @@
+/* Tracker - Theme Adaptive Styles */
+
+/* Theme Variables - Adapts to light/dark mode */
+:root {
+    /* Use app's global theme variables */
+    --tr-bg-primary: hsl(var(--background));
+    --tr-bg-secondary: hsl(var(--card));
+    --tr-text-primary: hsl(var(--foreground));
+    --tr-text-secondary: hsl(var(--muted-foreground));
+    --tr-accent: hsl(var(--primary));
+    --tr-accent-hover: hsl(var(--primary) / 0.9);
+    --tr-danger: #ef4444;
+    --tr-border: hsl(var(--border));
+    --tr-radius: 12px;
+    --tr-input-bg: hsl(var(--muted));
+}
+
+.tracker-container {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--tr-bg-primary);
+    color: var(--tr-text-primary);
+    width: 100%;
+}
+
+.tracker-card {
+    background-color: var(--tr-bg-secondary);
+    border-radius: var(--tr-radius);
+    padding: 1.5rem;
+    border: 1px solid var(--tr-border);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    transition: border-color 0.2s;
+}
+
+.tracker-card:hover {
+    border-color: var(--tr-accent);
+}
+
+.tracker-btn {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    background-color: var(--tr-accent);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--tr-radius);
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tracker-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.tracker-btn:active {
+    transform: translateY(0);
+}
+
+.tracker-btn-danger {
+    background-color: var(--tr-danger);
+}
+
+.tracker-btn-secondary {
+    background-color: var(--tr-input-bg);
+    color: var(--tr-text-primary);
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tracker-task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: var(--tr-input-bg);
+    border-radius: var(--tr-radius);
+    margin-bottom: 0.5rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.tracker-task-item:hover {
+    border-color: var(--tr-border);
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.05);
+}
+
+.tracker-input,
+.tracker-textarea,
+.tracker-select {
+    font-family: inherit;
+    background: var(--tr-input-bg);
+    border: 1px solid var(--tr-border);
+    color: var(--tr-text-primary);
+    border-radius: var(--tr-radius);
+    padding: 0.5rem 1rem;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.tracker-input:focus,
+.tracker-textarea:focus,
+.tracker-select:focus {
+    outline: none;
+    border-color: var(--tr-accent);
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+}
+
+.tracker-input::placeholder,
+.tracker-textarea::placeholder {
+    color: var(--tr-text-secondary);
+}
+
+/* Text utilities */
+.text-secondary {
+    color: var(--tr-text-secondary);
+}
+
+.text-accent {
+    color: var(--tr-accent);
+}
+
+/* Grid layouts */
+.tracker-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .tracker-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .tracker-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Mood selector */
+.mood-selector {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.mood-option {
+    padding: 0.5rem 1rem;
+    border-radius: var(--tr-radius);
+    border: 2px solid var(--tr-border);
+    background: var(--tr-bg-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mood-option:hover {
+    border-color: var(--tr-accent);
+}
+
+.mood-option.selected {
+    border-color: var(--tr-accent);
+    background: hsl(var(--primary) / 0.1);
+}
+
+/* Stats card */
+.stat-card {
+    text-align: center;
+    padding: 1rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--tr-accent);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--tr-text-secondary);
+    margin-top: 0.25rem;
+}

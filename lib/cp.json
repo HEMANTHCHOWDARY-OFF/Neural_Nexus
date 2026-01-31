@@ -1,0 +1,249 @@
+{
+    "cp_problems": [
+        {
+            "id": "282A",
+            "name": "Bit++",
+            "description": "Count net increment/decrement from + or - operations on variable X."
+        },
+        {
+            "id": "514A",
+            "name": "Chewbacca and Number",
+            "description": "Modify digits of a number to minimize its value, keeping the first non-zero digit intact."
+        },
+        {
+            "id": "263A",
+            "name": "Beautiful Matrix",
+            "description": "Find the shortest path to move 1 to position (5,5) in a 5x5 grid."
+        },
+        {
+            "id": "151A",
+            "name": "Soft Drinking",
+            "description": "Calculate max bottles drunk per hour from cans and slices shared among friends."
+        },
+        {
+            "id": "723A",
+            "name": "Buying Tournament Tickets",
+            "description": "Determine cheapest ticket option based on queue length and seats."
+        },
+        {
+            "id": "1352A",
+            "name": "Sum of Odd Numbers",
+            "description": "Rearrange first K odd numbers summing to X in non-decreasing order."
+        },
+        {
+            "id": "510A",
+            "name": "Fox And Snake",
+            "description": "Print a pattern resembling a snake using '#' and '.'."
+        },
+        {
+            "id": "785A",
+            "name": "Kira and mgmg",
+            "description": "Sum areas of given shapes (triangles, rectangles, etc.)."
+        },
+        {
+            "id": "144A",
+            "name": "Arrival of the General",
+            "description": "Find max height soldier's position and min height after him for army rearrangement."
+        },
+        {
+            "id": "1030A",
+            "name": "In Search of an Easy Problem",
+            "description": "Check if max of array elements exceeds 29."
+        },
+        {
+            "id": "136A",
+            "name": "Complete the Word",
+            "description": "Assign presents to kids based on liked/unliked types."
+        },
+        {
+            "id": "110A",
+            "name": "Nearly Lucky Number",
+            "description": "Count lucky digits (4,7) to verify if a number is lucky."
+        },
+        {
+            "id": "116A",
+            "name": "Mission League",
+            "description": "Maximize flagpole height by swapping heights greedily."
+        },
+        {
+            "id": "977A",
+            "name": "Wrong Subtraction",
+            "description": "Simulate K operations of subtract 1 or divide by 10 on N."
+        },
+        {
+            "id": "546A",
+            "name": "Soldier and Bananas",
+            "description": "Calculate minimum bananas Ksen bought to cover costs."
+        },
+        {
+            "id": "236A",
+            "name": "Boy or Girl",
+            "description": "Check if username has odd distinct character count."
+        },
+        {
+            "id": "281A",
+            "name": "Vasya the Hipster",
+            "description": "Count duplicate socks pairs Vasya can wear."
+        },
+        {
+            "id": "339A",
+            "name": "Helpful Maths",
+            "description": "Sum '+' separated numbers and print sorted result."
+        },
+        {
+            "id": "1368A",
+            "name": "C+=Plus",
+            "description": "Find minimum operations to make even number >= matrix size."
+        },
+        {
+            "id": "702A",
+            "name": "Maximal Continuous Rest",
+            "description": "Find longest consecutive increasing health subsequence."
+        },
+        {
+            "id": "1097A",
+            "name": "Cutting Burger",
+            "description": "Check if burger can be cut into pieces matching side lengths."
+        },
+        {
+            "id": "492A",
+            "name": "Vanya and Fence",
+            "description": "Count fence sections visible from side based on heights."
+        },
+        {
+            "id": "1433A",
+            "name": "Boring Apartments",
+            "description": "Generate number by repeating digit in specific pattern."
+        },
+        {
+            "id": "1303A",
+            "name": "Erasing Zeroes",
+            "description": "Minimum deletions to make leftmost non-zero digit first."
+        },
+        {
+            "id": "1095A",
+            "name": "Shortest and Longest LIS",
+            "description": "Construct shortest/longest LIS permutations for N."
+        },
+        {
+            "id": "1391B",
+            "name": "Appleman and Easy Task",
+            "description": "Count subarrays summing to target after prefix XOR."
+        },
+        {
+            "id": "118A",
+            "name": "String Task",
+            "description": "Process string: lowercase, remove vowels/consonants, double consonants, uppercase."
+        },
+        {
+            "id": "1300B",
+            "name": "Pinocchio",
+            "description": "Find shortest subsequence forming strictly increasing sequence."
+        },
+        {
+            "id": "1430C",
+            "name": "Number into Sequence",
+            "description": "Count ways to form sequence with given numbers and operations."
+        },
+        {
+            "id": "139A",
+            "name": "Theatre",
+            "description": "Distribute tickets bought over days to maximize consecutive days."
+        },
+        {
+            "id": "219A",
+            "name": "Choosing Flowers",
+            "description": "Count flowers needed for necklace with repetition limits."
+        },
+        {
+            "id": "1141A",
+            "name": "Game With Sticks",
+            "description": "Determine winner in Nim-like stick removal game."
+        },
+        {
+            "id": "118B",
+            "name": "The number of products",
+            "description": "Print pyramid of products up to N."
+        },
+        {
+            "id": "1373A",
+            "name": "Maximum in Table",
+            "description": "Find max in magic square table by row/col max operations."
+        },
+        {
+            "id": "268B",
+            "name": "Buttons",
+            "description": "Calculate pushes needed to reach rating with button costs."
+        },
+        {
+            "id": "476A",
+            "name": "Dreamoon and Sets",
+            "description": "Maximize distinct numbers sum in two sets with divisibility."
+        },
+        {
+            "id": "500A",
+            "name": "New Year Transportation",
+            "description": "Reach position T with jumps of given lengths."
+        },
+        {
+            "id": "131A",
+            "name": "c-plus-plus",
+            "description": "Check if string can become title case by changing case."
+        },
+        {
+            "id": "1139B",
+            "name": "Array Splitting",
+            "description": "Minimum splits for array to have increasing max prefix sums."
+        },
+        {
+            "id": "1199A",
+            "name": "Three Piles of Candy",
+            "description": "Max candies equalized from three piles."
+        },
+        {
+            "id": "1073A",
+            "name": "Diversified Checkers",
+            "description": "Minimum moves to diversify checkerboard pattern."
+        },
+        {
+            "id": "109A",
+            "name": "Lucky Sum",
+            "description": "Check if number can be sum of distinct lucky numbers (4,7)."
+        },
+        {
+            "id": "1244B",
+            "name": "Odd Differences",
+            "description": "Count positions where consecutive elements have odd difference."
+        },
+        {
+            "id": "1027A",
+            "name": "Multiple of 13",
+            "description": "Check if number formed by replacing '?' with digits is multiple of 13."
+        },
+        {
+            "id": "1278A",
+            "name": "Plus from Picture",
+            "description": "Count '+' shapes in given grid picture."
+        },
+        {
+            "id": "1133A",
+            "name": "Paper Cut",
+            "description": "Minimum cuts to get required rectangle from paper."
+        },
+        {
+            "id": "507A",
+            "name": "Amr and Pins",
+            "description": "Minimum time for Amr to collect all pins with radius constraint."
+        },
+        {
+            "id": "1237A",
+            "name": "Balanced Array",
+            "description": "Construct balanced array with single peak."
+        },
+        {
+            "id": "486B",
+            "name": "Lucky Numbers",
+            "description": "Count lucky numbers (>=K) after B operations on array."
+        }
+    ]
+}

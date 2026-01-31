@@ -46,6 +46,7 @@ export function Sidebar({ className }: { className?: string }) {
                             src="/nexushub-logo-v2.png"
                             alt="NexusHub Logo"
                             fill
+                            sizes="32px"
                             className="object-contain"
                         />
                     </div>
