@@ -136,7 +136,7 @@ graph TD
 
 ## 🏗️ Architecture
 
-![NexusHub Architecture](/assets/nexushub-architecture.png)
+![NexusHub Architecture](public/assets/nexushub-architecture.png)
 
 ### Frontend
 *   React / Next.js
