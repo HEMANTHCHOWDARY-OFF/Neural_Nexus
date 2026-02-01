@@ -136,26 +136,7 @@ graph TD
 
 ## 🏗️ Architecture
 
-```mermaid
-graph TD
-    User((User)) --> Client["Frontend (Next.js + Tailwind)"]
-    
-    subgraph Client Application
-        Client -->|Auth| Auth[Authentication]
-        Client -->|Visuals| Recharts[Recharts Analytics]
-    end
-    
-    Client -->|API Requests| Server["Backend (Node.js / Express)"]
-    
-    subgraph Cloud Infrastructure
-        Server -->|Data| DB[(Database)]
-        Server -->|Processing| AI["AI Services (OpenAI / Gemini)"]
-    end
-    
-    DB --- Users
-    DB --- Tasks
-    DB --- Projects
-```
+![NexusHub Architecture](/assets/nexushub-architecture.png)
 
 ### Frontend
 *   React / Next.js
@@ -287,6 +268,3 @@ Unlike tools that focus on only one part of growth, NexusHub integrates:
 
 ---
 
-## 📜 License
-
-MIT
