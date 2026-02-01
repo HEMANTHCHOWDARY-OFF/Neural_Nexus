@@ -229,17 +229,20 @@ Unlike tools that focus on only one part of growth, NexusHub integrates:
 
 ---
 
-## 📸 Screenshots
+### Landing Page
+![Landing Page](public/assets/landing.png)
 
-*(Add your screenshots here)*
+### Login / Signup
+![Login](public/assets/login.png)
 
-*   **Landing**
-*   **Dashboard**
-*   **Tracker**
-*   **Projects**
-*   **Resume Builder**
-*   **Analytics**
+### Dashboard
+![Dashboard](public/assets/dashboard.png)
 
+### Interview Simulator
+![Interview Simulator](public/assets/interview.png)
+
+### Profile
+![Profile](public/assets/profile.png)
 ---
 
 ## 🌍 Future Scope
