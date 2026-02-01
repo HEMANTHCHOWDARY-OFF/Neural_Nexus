@@ -116,6 +116,22 @@ NexusHub provides:
 8.  **8️⃣ Track progress with analytics**
 9.  **9️⃣ Share portfolio with recruiters**
 
+```mermaid
+graph TD
+    Start(1. Sign Up) --> Plan[2. Plan Daily Tasks]
+    Plan --> Work[3. Complete Work & Earn XP]
+    Work --> Tree{Tree Grows}
+    
+    Tree -->|Collaborate| Projects[4. Join Projects]
+    Tree -->|Stuck?| Help[5. Get Help]
+    
+    Projects & Help --> Resume[6. Generate Resume]
+    Resume --> Interview[7. Practice Interviews]
+    Interview --> Analytics[8. Track Progress]
+    Analytics --> Share[9. Share Portfolio]
+    Share --> Hired((Get Hired))
+```
+
 ---
 
 ## 🏗️ Architecture
