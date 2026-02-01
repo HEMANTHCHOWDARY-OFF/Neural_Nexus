@@ -238,6 +238,9 @@ Unlike tools that focus on only one part of growth, NexusHub integrates:
 ### Dashboard
 ![Dashboard](public/assets/dashboard.png)
 
+### Tracker
+![Tracker](public/assets/tracker.png)
+
 ### Interview Simulator
 ![Interview Simulator](public/assets/interview.png)
 
