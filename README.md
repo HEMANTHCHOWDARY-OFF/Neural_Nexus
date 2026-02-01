@@ -252,14 +252,6 @@ Unlike tools that focus on only one part of growth, NexusHub integrates:
 
 ---
 
-## 👨💻 Team
-
-*   **Sunil** – Frontend & System Design
-*   **Himesh** – Backend
-*   **Rahul** – Tracker Module
-*   **Hemanth** – Career AI
-*   **Hiteesh** – Collaboration & Projects
-
 ---
 
 ## 💡 One Line Pitch
