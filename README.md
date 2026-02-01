@@ -122,18 +122,18 @@ NexusHub provides:
 
 ```mermaid
 graph TD
-    User((User)) --> Client[Frontend (Next.js + Tailwind)]
+    User((User)) --> Client["Frontend (Next.js + Tailwind)"]
     
     subgraph Client Application
         Client -->|Auth| Auth[Authentication]
         Client -->|Visuals| Recharts[Recharts Analytics]
     end
     
-    Client -->|API Requests| Server[Backend (Node.js / Express)]
+    Client -->|API Requests| Server["Backend (Node.js / Express)"]
     
     subgraph Cloud Infrastructure
         Server -->|Data| DB[(Database)]
-        Server -->|Processing| AI[AI Services (OpenAI / Gemini)]
+        Server -->|Processing| AI["AI Services (OpenAI / Gemini)"]
     end
     
     DB --- Users
