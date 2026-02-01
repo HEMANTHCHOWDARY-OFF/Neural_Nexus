@@ -74,6 +74,7 @@ const DailyLogForm = ({ userId }: { userId: string | null }) => {
                     placeholder="What did you learn today? What could go better?"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
+                    style={{ width: '100%' }}
                 />
             </div>
 

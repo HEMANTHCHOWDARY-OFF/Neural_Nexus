@@ -354,17 +354,44 @@ const ResumeBuilder = () => {
         }
     };
 
-    // --- Mock AI Enhance ---
-    const handleAIEnhance = () => {
-        toast('AI Enhancement would run here! Configured to improve professional summary.', {
-            icon: '✨',
-            style: {
-                borderRadius: '10px',
-                background: '#333',
-                color: '#fff',
-            },
-        });
-        // In a real implementation: Call valid API with summary text
+    // --- AI Enhance ---
+    const [isEnhancing, setIsEnhancing] = useState(false);
+
+    const handleAIEnhance = async () => {
+        const currentSummary = formData.personalInfo.summary;
+        if (!currentSummary || currentSummary.trim().length < 10) {
+            toast.error("Please enter a rough summary first (at least 10 chars) for AI to enhance.", {
+                icon: '✍️'
+            });
+            return;
+        }
+
+        setIsEnhancing(true);
+        const toastId = toast.loading("AI is rewriting your summary...");
+
+        try {
+            const response = await fetch('/api/ai/enhance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text: currentSummary,
+                    type: 'summary'
+                }),
+            });
+
+            if (!response.ok) throw new Error("Failed to enhance text");
+
+            const data = await response.json();
+
+            updatePersonalInfo('summary', data.enhancedText);
+
+            toast.success("Summary enhanced!", { id: toastId });
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to enhance summary. Please try again.", { id: toastId });
+        } finally {
+            setIsEnhancing(false);
+        }
     };
 
 
@@ -408,8 +435,16 @@ const ResumeBuilder = () => {
                     <div className="bg-card p-6 rounded-xl border shadow-sm space-y-4">
                         <div className="flex justify-between items-center">
                             <h3 className="text-xl font-semibold text-primary">Professional Summary</h3>
-                            <Button size="sm" variant="ghost" className="text-purple-600" onClick={handleAIEnhance}>
-                                <Wand2 className="w-4 h-4 mr-2" /> AI Enhance
+                            <Button size="sm" variant="ghost" className="text-purple-600" onClick={handleAIEnhance} disabled={isEnhancing}>
+                                {isEnhancing ? (
+                                    <>
+                                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Enhancing...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Wand2 className="w-4 h-4 mr-2" /> AI Enhance
+                                    </>
+                                )}
                             </Button>
                         </div>
                         <textarea

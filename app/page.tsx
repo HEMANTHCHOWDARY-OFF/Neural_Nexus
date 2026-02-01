@@ -15,7 +15,8 @@ import {
   Calendar,
   Flame,
   Code,
-  Target
+  Target,
+  Download
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -40,13 +41,13 @@ export default function Home() {
       <ThreeBackground />
 
       {/* Hero Section - Above the Fold */}
-      <section className="relative pt-32 pb-20 z-10">
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-20 z-10">
         <div className="container px-4 mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left - Copy */}
-            <div>
+            <div className="text-center lg:text-left">
               <motion.h1
-                className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
@@ -56,7 +57,7 @@ export default function Home() {
               </motion.h1>
 
               <motion.p
-                className="text-xl text-gray-300 mb-8 max-w-xl"
+                className="text-lg md:text-xl text-gray-300 mb-8 max-w-xl mx-auto lg:mx-0"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
@@ -65,7 +66,7 @@ export default function Home() {
               </motion.p>
 
               <motion.div
-                className="flex flex-col sm:flex-row gap-4"
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
@@ -75,9 +76,14 @@ export default function Home() {
                     Try Live Demo
                   </Button>
                 </Link>
-                <Link href="/login">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 text-lg border-white/20 hover:bg-white/5">
-                    Login
+                <Link href="/mobile">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto h-14 px-8 text-lg border-white/20 hover:bg-white/5"
+                  >
+                    <Download className="mr-2 h-5 w-5" />
+                    Download App
                   </Button>
                 </Link>
               </motion.div>
@@ -85,7 +91,7 @@ export default function Home() {
 
             {/* Right - 3D Network Visual */}
             <motion.div
-              className="relative h-[500px]"
+              className="relative h-[300px] md:h-[500px] mt-8 lg:mt-0"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}

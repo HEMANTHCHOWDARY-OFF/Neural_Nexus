@@ -40,12 +40,21 @@ const setStore = <T>(key: string, data: T[]) => {
     localStorage.setItem(key, JSON.stringify(data));
 };
 
+const notifySubscribers = () => {
+    if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('nexus_update'));
+    }
+};
+
 export const dbService = {
     // --- TASKS OPERATIONS ---
 
-    getTasks: (userId: string, date: string): Task[] => {
+    getTasks: (userId: string, date?: string): Task[] => {
         const tasks = getStore<Task>(TASKS_KEY);
-        return tasks.filter(t => t.user_id === userId && t.date === date);
+        if (date) {
+            return tasks.filter(t => t.user_id === userId && t.date === date);
+        }
+        return tasks.filter(t => t.user_id === userId);
     },
 
     addTask: (task: Omit<Task, 'id'>): Task => {
@@ -53,6 +62,7 @@ export const dbService = {
         const newTask = { ...task, id: Date.now().toString() };
         tasks.push(newTask);
         setStore(TASKS_KEY, tasks);
+        notifySubscribers();
         return newTask;
     },
 
@@ -62,6 +72,7 @@ export const dbService = {
         if (index !== -1) {
             tasks[index] = { ...tasks[index], ...updates };
             setStore(TASKS_KEY, tasks);
+            notifySubscribers();
             return true;
         }
         return false;
@@ -71,6 +82,7 @@ export const dbService = {
         const tasks = getStore<Task>(TASKS_KEY);
         const newTasks = tasks.filter(t => t.id !== taskId);
         setStore(TASKS_KEY, newTasks);
+        notifySubscribers();
     },
 
     // --- DAILY LOG OPERATIONS ---
@@ -93,7 +105,34 @@ export const dbService = {
             const newLog = { ...logData, id: Date.now().toString() };
             logs.push(newLog);
             setStore(LOGS_KEY, logs);
+
+            // --- STREAK LOGIC ---
+            const user = dbService.getUser(logData.user_id);
+
+            // Calculate Yesterday
+            const today = new Date(logData.date);
+            const yesterdayDate = new Date(today);
+            yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+            const yesterdayStr = yesterdayDate.toISOString().split('T')[0];
+
+            // Check if user has a log for yesterday
+            const yesterdayLog = logs.find(l => l.user_id === logData.user_id && l.date === yesterdayStr);
+
+            let newStreak = 1;
+            if (yesterdayLog) {
+                newStreak = (user.streak || 0) + 1;
+            }
+
+            const updates: Partial<User> = { streak: newStreak };
+
+            // Update Longest Streak
+            if (newStreak > (user.longest_streak || 0)) {
+                updates.longest_streak = newStreak;
+            }
+
+            dbService.updateUser(logData.user_id, updates);
         }
+        notifySubscribers();
         return true;
     },
 
@@ -132,6 +171,7 @@ export const dbService = {
         if (index !== -1) {
             users[index] = { ...users[index], ...updates };
             setStore(USERS_KEY, users);
+            notifySubscribers();
             return users[index];
         }
         return null;

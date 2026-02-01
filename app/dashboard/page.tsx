@@ -5,6 +5,9 @@ import { QuickActions } from "@/components/dashboard/QuickActions";
 import TreeWidget from "@/components/tracker/TreeWidget";
 import { CheckCircle, Briefcase, Trophy, Target, TrendingUp, Zap, Calendar, ArrowUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { useUserStats } from "@/hooks/useUserStats";
+import { dbService } from "@/lib/tracker/db";
 
 // Helper component for Today's Progress
 function TodaysProgress() {
@@ -50,6 +53,24 @@ function TodaysProgress() {
 }
 
 export default function DashboardPage() {
+    const [userId, setUserId] = useState<string | null>(null);
+    const [completedTasksCount, setCompletedTasksCount] = useState(0);
+
+    useEffect(() => {
+        // Hydration fix: accessing localStorage only on client mount
+        const storedUserId = localStorage.getItem('nexus_user_id');
+        setUserId(storedUserId);
+
+        if (storedUserId) {
+            // Load task counts
+            const tasks = dbService.getTasks(storedUserId);
+            const completed = tasks.filter(t => t.completed).length;
+            setCompletedTasksCount(completed);
+        }
+    }, []);
+
+    const { stats } = useUserStats(userId);
+
     const quickActions = [
         {
             title: "Habit Tracker",
@@ -119,15 +140,15 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <StatsCard
                     title="Current Streak"
-                    value="12 days"
+                    value={`${stats.streak} days`}
                     icon={Zap}
-                    trend={{ value: 20, isPositive: true }}
+                    trend={{ value: 0, isPositive: true }}
                 />
                 <StatsCard
                     title="Tasks Completed"
-                    value="47"
+                    value={completedTasksCount.toString()}
                     icon={CheckCircle}
-                    trend={{ value: 12, isPositive: true }}
+                    trend={{ value: 0, isPositive: true }}
                 />
                 <StatsCard
                     title="Active Projects"
@@ -137,9 +158,9 @@ export default function DashboardPage() {
                 />
                 <StatsCard
                     title="Total XP"
-                    value="1,250"
+                    value={stats.xp.toLocaleString()}
                     icon={Trophy}
-                    trend={{ value: 8, isPositive: true }}
+                    trend={{ value: 0, isPositive: true }}
                 />
             </div>
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import { useState } from "react";
 
 export function LandingNavbar() {
@@ -37,9 +37,17 @@ export function LandingNavbar() {
                         <Link href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                             Demo
                         </Link>
-                        <Link href="https://github.com" target="_blank" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                            GitHub
+                        <Link href="/mobile">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="gap-2 text-muted-foreground hover:text-foreground"
+                            >
+                                <Download size={16} />
+                                App
+                            </Button>
                         </Link>
+                        <div className="h-6 w-px bg-white/10 mx-2" />
                         <Link href="/login">
                             <Button variant="ghost" size="sm">Login</Button>
                         </Link>
@@ -65,9 +73,11 @@ export function LandingNavbar() {
                         <Link href="#how-it-works" className="block px-4 py-2 text-sm hover:bg-white/5 rounded-lg transition-colors">
                             Demo
                         </Link>
-                        <Link href="https://github.com" target="_blank" className="block px-4 py-2 text-sm hover:bg-white/5 rounded-lg transition-colors">
-                            GitHub
+                        <Link href="/mobile" className="block px-4 py-2 text-sm hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2">
+                            <Download size={16} />
+                            Download App
                         </Link>
+                        <div className="h-px bg-white/10 mx-4 my-2" />
                         <Link href="/login" className="block px-4 py-2">
                             <Button variant="ghost" className="w-full">Login</Button>
                         </Link>

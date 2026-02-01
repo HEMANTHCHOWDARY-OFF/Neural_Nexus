@@ -11,14 +11,23 @@ const AnalyticsSection = () => {
     const [data, setData] = useState<any[]>([]);
 
     useEffect(() => {
-        if (userId) {
+        if (!userId) return;
+
+        const fetchLogs = () => {
             const logs = dbService.getRecentLogs(userId);
             const formatted = logs.map(l => ({
                 date: new Date(l.date).toLocaleDateString('en-US', { weekday: 'short' }),
-                score: l.mood === '🔥 Productive' ? 100 : (l.mood === '🙂 Happy' ? 80 : 50) // Simplified Score
+                score: l.mood === '🔥 Productive' ? 100 : (l.mood === '🙂 Happy' ? 80 : 50)
             }));
             setData(formatted);
-        }
+        };
+
+        fetchLogs();
+
+        const updateHandler = () => fetchLogs();
+        window.addEventListener('nexus_update', updateHandler);
+
+        return () => window.removeEventListener('nexus_update', updateHandler);
     }, [userId]);
 
     return (
@@ -28,7 +37,7 @@ const AnalyticsSection = () => {
                 <div style={{ fontSize: '0.875rem', color: 'var(--tr-text-secondary)' }}>Last 7 Days</div>
             </div>
 
-            <div style={{ height: '200px', width: '100%', marginTop: '1rem', minHeight: 200 }}>
+            <div style={{ height: '200px', width: '100%', marginTop: '1rem', minHeight: '200px', minWidth: 0 }}>
                 <ResponsiveContainer width="100%" height="100%" minHeight={200}>
                     <LineChart data={data}>
                         <XAxis dataKey="date" stroke="var(--tr-text-secondary)" fontSize={12} tickLine={false} axisLine={false} />

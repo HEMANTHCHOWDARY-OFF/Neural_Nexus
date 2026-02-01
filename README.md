@@ -8,7 +8,13 @@
 -   **Skill Gap Detector**: Interactive tool to analyze your skills against industry standards for roles like Frontend, Backend, and Data Science.
 -   **AI Resume Screener**: Instant feedback on your resume with ATS-friendly scoring.
 -   **AI Interview Simulator**: Generates role-specific interview questions (Technical & Behavioral) based on your resume.
--   **Resume Builder**: Create professional resumes with real-time preview.
+-   **AI Resume Enhancer**: Uses Llama 3 (via Groq) to rewrite and professionalize your resume summary instantly.
+-   **Resume Builder**: Create professional resumes with real-time preview and AI assistance.
+
+### 2. Real-time Collaboration Hub (New!)
+-   **Live Project Settings**: Update project details, tech stacks, and descriptions in real-time across all connected clients.
+-   **Team Management**: Send collaboration requests and track recruitment status instantly.
+-   **Presence Awareness**: Real-time member counts and status updates.
 
 ### 2. Competitive Arena
 -   **Theme-Adaptive UI**: Seamless light/dark mode support for comfortable coding sessions.

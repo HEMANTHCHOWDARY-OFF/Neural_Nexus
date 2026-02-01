@@ -118,15 +118,16 @@ const TaskList = ({ userId }: { userId: string | null }) => {
                 )}
             </div>
 
-            <form onSubmit={handleAddTask} style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+            <form onSubmit={handleAddTask} style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', width: '100%' }}>
                 <input
                     type="text"
                     className="tracker-input"
                     placeholder="Add a new task..."
                     value={newTask}
                     onChange={(e) => setNewTask(e.target.value)}
+                    style={{ flex: 1 }}
                 />
-                <button type="submit" className="tracker-btn" disabled={!newTask.trim()}>
+                <button type="submit" className="tracker-btn" disabled={!newTask.trim()} style={{ flexShrink: 0 }}>
                     <Plus size={20} />
                 </button>
             </form>

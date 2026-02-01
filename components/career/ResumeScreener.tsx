@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect, useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { analyzeResume } from '@/actions/career';
+import { analyzeResume, generateInterviewQuestions } from '@/actions/career';
 import { db } from '@/lib/firebase';
 import { useAuth } from "@/context/AuthContext";
 import { collection, addDoc, query, where, orderBy, getDocs } from 'firebase/firestore';
-import { Loader2, Upload, FileText, CheckCircle, AlertTriangle, AlertCircle } from 'lucide-react';
+import { Loader2, Upload, FileText, CheckCircle, AlertTriangle, AlertCircle, MessageSquare, ChevronRight } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 const initialState = {
@@ -29,6 +29,8 @@ function SubmitButton() {
 const ResumeScreener = () => {
     const [file, setFile] = useState<File | null>(null);
     const [analysis, setAnalysis] = useState<any>(null);
+    const [questions, setQuestions] = useState<any[] | null>(null);
+    const [generatingQuestions, setGeneratingQuestions] = useState(false);
     const [history, setHistory] = useState<any[]>([]);
     const { user } = useAuth();
 
@@ -73,7 +75,8 @@ const ResumeScreener = () => {
             if (error.code === 'permission-denied') {
                 toast.error('Unable to load history. Please check Firebase permissions.');
             } else if (error.code === 'failed-precondition') {
-                toast.error('Database index required. Please contact support.');
+                toast.error('Database index required. Check console for link.');
+                console.log('Use this link to create the index:', error.message);
             }
             // Set empty history to prevent UI issues
             setHistory([]);
@@ -97,6 +100,31 @@ const ResumeScreener = () => {
         } catch (error) {
             console.error('Error saving history:', error);
             toast.error('Failed to save result to history.');
+        }
+    };
+
+    const generateQuestionsHandler = async () => {
+        if (!file) return;
+
+        setGeneratingQuestions(true);
+        const formData = new FormData();
+        formData.append('resume', file);
+        formData.append('difficulty', 'Medium');
+
+        try {
+            // @ts-ignore
+            const result = await generateInterviewQuestions(null, formData);
+            if (result.success) {
+                setQuestions(result.questions);
+                toast.success('Interview questions generated!');
+            } else {
+                toast.error(result.error);
+            }
+        } catch (error) {
+            console.error('Error generating questions:', error);
+            toast.error('Failed to generate questions.');
+        } finally {
+            setGeneratingQuestions(false);
         }
     };
 
@@ -194,54 +222,95 @@ const ResumeScreener = () => {
                             <p>Upload a resume to see detailed analysis</p>
                         </div>
                     )}
+
+                    {/* Questions Section */}
+                    {analysis && (
+                        <div className="mt-8 border-t pt-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="font-semibold text-lg flex items-center gap-2">
+                                    <MessageSquare className="w-5 h-5 text-primary" />
+                                    Interview Questions
+                                </h3>
+                                {!questions && (
+                                    <button
+                                        onClick={generateQuestionsHandler}
+                                        disabled={generatingQuestions}
+                                        className="text-sm bg-secondary hover:bg-secondary/80 text-secondary-foreground px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+                                    >
+                                        {generatingQuestions ? 'Generating...' : 'Generate Questions'}
+                                    </button>
+                                )}
+                            </div>
+
+                            {questions && (
+                                <div className="space-y-4">
+                                    {questions.map((q, i) => (
+                                        <div key={i} className="p-4 bg-muted/30 rounded-lg border">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <span className="text-xs font-semibold uppercase text-primary bg-primary/10 px-2 py-1 rounded">
+                                                    {q.type}
+                                                </span>
+                                                <span className="text-xs text-muted-foreground">
+                                                    {q.difficulty}
+                                                </span>
+                                            </div>
+                                            <p className="font-medium text-sm">{q.question}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 
             {/* History Section */}
-            {history.length > 0 && (
-                <div className="bg-card text-card-foreground rounded-xl shadow-sm border p-6">
-                    <h3 className="text-lg font-semibold mb-4">Recent Analyses</h3>
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr className="border-b text-left text-xs uppercase text-muted-foreground">
-                                    <th className="pb-3 pl-4">Date</th>
-                                    <th className="pb-3">File</th>
-                                    <th className="pb-3">ATS Score</th>
-                                    <th className="pb-3">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y">
-                                {history.map((item) => (
-                                    <tr key={item.id} className="hover:bg-muted/50">
-                                        <td className="py-3 pl-4 text-sm">
-                                            {new Date(item.createdAt).toLocaleDateString()}
-                                        </td>
-                                        <td className="py-3 text-sm font-medium">{item.fileName}</td>
-                                        <td className="py-3">
-                                            <span className={`px-2 py-0.5 rounded text-xs font-medium ${item.atsScore >= 80 ? 'bg-green-100 text-green-700' :
-                                                item.atsScore >= 60 ? 'bg-yellow-100 text-yellow-700' :
-                                                    'bg-red-100 text-red-700'
-                                                }`}>
-                                                {item.atsScore}%
-                                            </span>
-                                        </td>
-                                        <td className="py-3">
-                                            <button
-                                                onClick={() => setAnalysis(item)}
-                                                className="text-primary hover:underline text-sm"
-                                            >
-                                                View
-                                            </button>
-                                        </td>
+            {
+                history.length > 0 && (
+                    <div className="bg-card text-card-foreground rounded-xl shadow-sm border p-6">
+                        <h3 className="text-lg font-semibold mb-4">Recent Analyses</h3>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="border-b text-left text-xs uppercase text-muted-foreground">
+                                        <th className="pb-3 pl-4">Date</th>
+                                        <th className="pb-3">File</th>
+                                        <th className="pb-3">ATS Score</th>
+                                        <th className="pb-3">Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="divide-y">
+                                    {history.map((item) => (
+                                        <tr key={item.id} className="hover:bg-muted/50">
+                                            <td className="py-3 pl-4 text-sm">
+                                                {new Date(item.createdAt).toLocaleDateString()}
+                                            </td>
+                                            <td className="py-3 text-sm font-medium">{item.fileName}</td>
+                                            <td className="py-3">
+                                                <span className={`px-2 py-0.5 rounded text-xs font-medium ${item.atsScore >= 80 ? 'bg-green-100 text-green-700' :
+                                                    item.atsScore >= 60 ? 'bg-yellow-100 text-yellow-700' :
+                                                        'bg-red-100 text-red-700'
+                                                    }`}>
+                                                    {item.atsScore}%
+                                                </span>
+                                            </td>
+                                            <td className="py-3">
+                                                <button
+                                                    onClick={() => setAnalysis(item)}
+                                                    className="text-primary hover:underline text-sm"
+                                                >
+                                                    View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 

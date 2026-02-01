@@ -17,10 +17,17 @@ export const useUserStats = (userId: string | null) => {
     useEffect(() => {
         fetchStats();
 
-        // Poll for updates (simple way to keep it reactive since we aren't using a real-time valid store subscription)
-        // 2 second interval is fast enough for UI without killing performance
+        // Listen for real-time updates from dbService
+        const updateHandler = () => fetchStats();
+        window.addEventListener('nexus_update', updateHandler);
+
+        // Poll for updates (backup for cross-tab or external changes)
         const interval = setInterval(fetchStats, 2000);
-        return () => clearInterval(interval);
+
+        return () => {
+            window.removeEventListener('nexus_update', updateHandler);
+            clearInterval(interval);
+        };
     }, [fetchStats]);
 
     return { stats, loading, refreshStats: fetchStats };

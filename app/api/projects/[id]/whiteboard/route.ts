@@ -17,9 +17,21 @@ export async function GET(
         }
 
         const data = whiteboardSnap.data();
+        let parsedDrawingData = [];
+        try {
+            if (typeof data.drawing_data === 'string') {
+                parsedDrawingData = JSON.parse(data.drawing_data);
+            } else if (Array.isArray(data.drawing_data)) {
+                parsedDrawingData = data.drawing_data;
+            }
+        } catch (e) {
+            console.error('Error parsing drawing data:', e);
+            parsedDrawingData = [];
+        }
+
         return NextResponse.json({
             ...data,
-            drawing_data: JSON.parse(data.drawing_data || '[]')
+            drawing_data: parsedDrawingData
         });
     } catch (error: any) {
         console.error('Error fetching whiteboard:', error);

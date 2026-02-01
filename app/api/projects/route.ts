@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { collection, getDocs, doc, setDoc, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { v4 as uuidv4 } from 'uuid';
 
 // GET all projects
 export async function GET(request: NextRequest) {
@@ -38,6 +37,7 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { title, description, owner_id, tech_stack } = body;
 
+        // Validation
         if (!title || !owner_id) {
             return NextResponse.json(
                 { error: 'Title and owner_id are required' },
@@ -45,7 +45,10 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const projectId = uuidv4();
+        // Use native UUID or fallback
+        const projectId = crypto.randomUUID();
+
+        console.log(`Creating project ${projectId} for user ${owner_id}`);
 
         // Create project
         const projectRef = doc(collection(db, 'projects'), projectId);
@@ -83,6 +86,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ id: projectId, title, description, owner_id, tech_stack }, { status: 201 });
     } catch (error: any) {
         console.error('Error creating project:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
     }
 }

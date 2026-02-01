@@ -20,7 +20,8 @@ import {
     Briefcase,
     Award,
     Target,
-    Zap
+    Zap,
+    Share2
 } from "lucide-react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -210,13 +211,27 @@ export default function ProfilePage() {
                     {/* Action Buttons */}
                     <div className="flex gap-2">
                         {!isEditing ? (
-                            <Button
-                                onClick={() => setIsEditing(true)}
-                                className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600"
-                            >
-                                <Edit2 className="w-4 h-4 mr-2" />
-                                Edit Profile
-                            </Button>
+                            <>
+                                <Button
+                                    variant="outline"
+                                    className="border-white/20 hover:bg-white/5"
+                                    onClick={() => {
+                                        const url = `${window.location.origin}/profile/${user?.uid}`;
+                                        navigator.clipboard.writeText(url);
+                                        toast.success("Public profile link copied!");
+                                    }}
+                                >
+                                    <Share2 className="w-4 h-4 mr-2" />
+                                    Share
+                                </Button>
+                                <Button
+                                    onClick={() => setIsEditing(true)}
+                                    className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600"
+                                >
+                                    <Edit2 className="w-4 h-4 mr-2" />
+                                    Edit Profile
+                                </Button>
+                            </>
                         ) : (
                             <>
                                 <Button
